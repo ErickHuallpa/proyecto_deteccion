@@ -16,7 +16,7 @@ Este proyecto utiliza OpenCV y MediaPipe para detectar el estado de una persona 
 
 ```bash
 pip install opencv-python mediapipe pygame numpy pandas scikit-learn tensorflow joblib
-
+```
 
 ## Estructura del proyecto
 bash
@@ -33,39 +33,36 @@ proyecto_deteccion/
 └── main_deteccion.py         # Script principal de detección en vivo
 
 ## Uso
-Generar el dataset simulado
+1. Generar el dataset simulado
 
-Ejecuta el script para crear datos simulados en datos/dataset.csv:
+- Ejecuta el script para crear datos simulados en datos/dataset.csv:
 
-bash
-Copiar
-Editar
+```bash
 python generar_dataset.py
-Entrenar la red neuronal
+```
+2. Entrenar la red neuronal
 
-Ejecuta el script para entrenar el modelo con el dataset generado. Esto creará modelo_entrenado.h5 y scaler.pkl:
+- Ejecuta el script para entrenar el modelo con el dataset generado. Esto creará modelo_entrenado.h5 y scaler.pkl:
 
-bash
-Copiar
-Editar
+```bash
 python modelo_entrenamiento.py
-Ejecutar la detección en tiempo real
+```
+3. Ejecutar la detección en tiempo real
 
-Inicia la aplicación de detección en vivo que usa la webcam:
+- Inicia la aplicación de detección en vivo que usa la webcam:
 
-bash
-Copiar
-Editar
+```bash
 python main_deteccion.py
-Controles:
-ESC: Salir del programa
+```
+### Controles:
+- ESC: Salir del programa
+- ESPACIO: Apagar alarma manualmente
 
-Espacio: Apagar manualmente la alarma sonora si está sonando
-
-Notas
+## Notas
 Asegúrate de que alarma.mp3 se encuentre en la misma carpeta que main_deteccion.py.
-
 La red neuronal usa 4 características: EAR izquierdo, EAR derecho, EAR promedio y movimiento facial para clasificar el estado.
-
 Los datos simulados representan tres estados: Despierto (0), Durmiendo (1) y Posible Ebriedad (2).
+
+## Autor
+Erick Huallpa Vargas
 
