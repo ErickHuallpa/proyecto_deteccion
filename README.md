@@ -77,7 +77,7 @@ pandas
 
 joblib
 
-Uso
+## Uso
 1. Recolectar datos
 Ejecuta el script para recolectar datos con etiquetas manuales.
 
