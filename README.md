@@ -19,18 +19,24 @@ pip install opencv-python mediapipe pygame numpy pandas scikit-learn tensorflow 
 ```
 
 ## Estructura del proyecto
-bash
-Copiar
-Editar
+
 proyecto_deteccion/
+
 ├── datos/
-│   └── dataset.csv            # Dataset simulado (generado automáticamente)
-├── generar_dataset.py         # Script para generar dataset simulado
-├── modelo_entrenamiento.py   # Entrena la red neuronal con el dataset
-├── modelo_entrenado.h5       # Modelo entrenado (se genera)
-├── scaler.pkl                # Escalador de datos (se genera)
-├── alarma.mp3                # Archivo de audio para la alarma
-└── main_deteccion.py         # Script principal de detección en vivo
+
+│ └── dataset.csv # Dataset simulado (generado automáticamente)
+
+├── generar_dataset.py # Script para generar dataset simulado
+
+├── modelo_entrenamiento.py # Entrena la red neuronal con el dataset
+
+├── modelo_entrenado.h5 # Modelo entrenado (se genera)
+
+├── scaler.pkl # Escalador de datos (se genera)
+
+├── alarma.mp3 # Archivo de audio para la alarma
+
+└── main_deteccion.py # Script principal de detección en vivo
 
 ## Uso
 1. Generar el dataset simulado
@@ -59,9 +65,9 @@ python main_deteccion.py
 - ESPACIO: Apagar alarma manualmente
 
 ## Notas
-Asegúrate de que alarma.mp3 se encuentre en la misma carpeta que main_deteccion.py.
-La red neuronal usa 4 características: EAR izquierdo, EAR derecho, EAR promedio y movimiento facial para clasificar el estado.
-Los datos simulados representan tres estados: Despierto (0), Durmiendo (1) y Posible Ebriedad (2).
+- Asegúrate de que alarma.mp3 se encuentre en la misma carpeta que main_deteccion.py.
+- La red neuronal usa 4 características: EAR izquierdo, EAR derecho, EAR promedio y movimiento facial para clasificar el estado.
+- Los datos simulados representan tres estados: Despierto (0), Durmiendo (1) y Posible Ebriedad (2).
 
 ## Autor
 Erick Huallpa Vargas
