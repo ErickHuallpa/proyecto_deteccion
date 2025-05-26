@@ -1,130 +1,71 @@
-# Proyecto Detección de Somnolencia y Ebriedad
+# Sistema de Detección de Sueño y Ebriedad usando Visión por Computadora
 
-![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
-![OpenCV](https://img.shields.io/badge/OpenCV-4.x-green)
-![TensorFlow](https://img.shields.io/badge/TensorFlow-2.x-orange)
-![MediaPipe](https://img.shields.io/badge/MediaPipe-latest-red)
+Este proyecto utiliza OpenCV y MediaPipe para detectar el estado de una persona (Despierto, Durmiendo o Posible Ebriedad) en tiempo real mediante análisis del parpadeo (EAR) y movimientos faciales. Además, emplea una red neuronal entrenada con datos simulados para clasificar el estado y dispara una alarma sonora cuando detecta sueño.
 
 ---
 
-## Descripción
+## Requisitos
 
-Este proyecto implementa un sistema de **detección en tiempo real** de somnolencia y ebriedad utilizando visión por computadora y aprendizaje automático. 
-
-Utiliza la librería [MediaPipe](https://mediapipe.dev/) para la detección de landmarks faciales y calcula el **Eye Aspect Ratio (EAR)** y movimiento facial para determinar el estado del usuario:
-
-- **Despierto**
-- **Durmiendo**
-- **Posiblemente ebrio**
-
-Para mejorar la precisión, se entrena una red neuronal que clasifica el estado basado en características extraídas en tiempo real.
+- Python 3.8 o superior
+- Webcam
+- Archivo de audio `alarma.mp3` en la carpeta del proyecto
 
 ---
 
-## Características principales
+## Instalación de dependencias
 
-- Captura de video en tiempo real con OpenCV.
-- Detección de landmarks faciales con MediaPipe Face Mesh.
-- Cálculo de métricas faciales: Eye Aspect Ratio (EAR) y movimientos faciales.
-- Recolección manual de datos para etiquetado y entrenamiento.
-- Entrenamiento de red neuronal con TensorFlow/Keras.
-- Alarma sonora activada cuando se detecta somnolencia.
-- Clasificación automática del estado usando modelo entrenado.
-- Código modular y fácil de entender.
-
+```bash
+pip install opencv-python mediapipe pygame numpy pandas scikit-learn tensorflow joblib
 
 
 ## Estructura del proyecto
-
-
-proyecto_deteccion/
-│
-├── datos/
-│   └── dataset.csv             # Datos recolectados para entrenamiento
-├── alarma.mp3                  # Sonido de alarma para somnolencia
-├── main_deteccion.py           # Código principal para detección en tiempo real
-├── modelo_entrenamiento.py     # Script para entrenar el modelo
-├── modelo_entrenado.h5         # Modelo entrenado (guardado)
-├── recolectar_datos.py         # Script para recolectar datos y generar CSV
-├── scaler.pkl                  # Archivo con scaler para normalizar datos
-├── README.md                   # Este archivo
-└── requirements.txt            # Dependencias del proyecto
-Instalación
-Se recomienda usar un entorno virtual de Python.
-
 bash
 Copiar
 Editar
-python -m venv venv
-source venv/bin/activate  # Linux/macOS
-venv\Scripts\activate     # Windows
-
-pip install -r requirements.txt
-Dependencias principales
-opencv-python
-
-mediapipe
-
-numpy
-
-pygame
-
-tensorflow
-
-scikit-learn
-
-pandas
-
-joblib
+proyecto_deteccion/
+├── datos/
+│   └── dataset.csv            # Dataset simulado (generado automáticamente)
+├── generar_dataset.py         # Script para generar dataset simulado
+├── modelo_entrenamiento.py   # Entrena la red neuronal con el dataset
+├── modelo_entrenado.h5       # Modelo entrenado (se genera)
+├── scaler.pkl                # Escalador de datos (se genera)
+├── alarma.mp3                # Archivo de audio para la alarma
+└── main_deteccion.py         # Script principal de detección en vivo
 
 ## Uso
-1. Recolectar datos
-Ejecuta el script para recolectar datos con etiquetas manuales.
+Generar el dataset simulado
+
+Ejecuta el script para crear datos simulados en datos/dataset.csv:
 
 bash
 Copiar
 Editar
-python recolectar_datos.py
-Presiona D para marcar "Despierto"
+python generar_dataset.py
+Entrenar la red neuronal
 
-Presiona S para marcar "Durmiendo"
-
-Presiona E para marcar "Posiblemente ebrio"
-
-Presiona ESC para salir
-
-Los datos se guardan en datos/dataset.csv.
-
-2. Entrenar el modelo
-Ejecuta el script para entrenar la red neuronal:
+Ejecuta el script para entrenar el modelo con el dataset generado. Esto creará modelo_entrenado.h5 y scaler.pkl:
 
 bash
 Copiar
 Editar
 python modelo_entrenamiento.py
-El modelo entrenado se guardará en modelo_entrenado.h5 y el scaler en scaler.pkl.
+Ejecutar la detección en tiempo real
 
-3. Ejecutar detección en tiempo real
-Corre el script principal:
+Inicia la aplicación de detección en vivo que usa la webcam:
 
 bash
 Copiar
 Editar
 python main_deteccion.py
-Se abrirá la cámara y se mostrará el estado detectado en tiempo real con una alarma sonora en caso de somnolencia.
+Controles:
+ESC: Salir del programa
 
-Personalización
-Puedes ajustar los umbrales y parámetros en el código.
+Espacio: Apagar manualmente la alarma sonora si está sonando
 
-Modificar el modelo para agregar más características o estados.
+Notas
+Asegúrate de que alarma.mp3 se encuentre en la misma carpeta que main_deteccion.py.
 
-Cambiar el archivo de audio alarma.mp3 por otro sonido.
+La red neuronal usa 4 características: EAR izquierdo, EAR derecho, EAR promedio y movimiento facial para clasificar el estado.
 
-Licencia
-Este proyecto está bajo la licencia MIT. Puedes usarlo y modificarlo libremente.
+Los datos simulados representan tres estados: Despierto (0), Durmiendo (1) y Posible Ebriedad (2).
 
-Contacto
-Erick Huallpa - GitHub
-Correo: erickhuallpa@example.com
-
-¡Gracias por usar el proyecto! Si tienes dudas o sugerencias, abre un issue o PR en GitHub.

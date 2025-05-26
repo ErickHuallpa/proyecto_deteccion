@@ -1,94 +1,61 @@
-=========================
-SISTEMA DE DETECCIÓN DE SUEÑO / EBRIEDAD
-=========================
+INSTRUCCIONES DE USO DEL SISTEMA DE DETECCIÓN DE SUEÑO / EBRIEDAD
 
-REQUISITOS:
------------
-Python 3.7+
-Instalar dependencias:
+1️⃣ Requisitos Previos
+----------------------
+Antes de comenzar, asegúrate de tener instaladas las siguientes dependencias:
 
-pip install -r requirements.txt
+- Python >= 3.8
+- pip
 
-Archivo 'requirements.txt' recomendado:
----------------------------------------
-opencv-python
-mediapipe
-pygame
-numpy
-tensorflow
-scikit-learn
-joblib
-pandas
+Instala las librerías necesarias con el siguiente comando:
 
-PASO A PASO DE USO:
--------------------
+    pip install opencv-python mediapipe pygame numpy pandas scikit-learn tensorflow joblib
 
-1. CAPTURAR DATOS (crear CSV con datos simulados)
--------------------------------------------------
-Ejecutar el script:
+2️⃣ Estructura de Carpetas Esperada
+-----------------------------------
+Crea una estructura como esta en tu proyecto:
 
-    python recolectar_datos.py
+    proyecto_deteccion/
+    ├── datos/
+    │   └── dataset.csv        <-- (se genera en el paso 3)
+    ├── generar_dataset.py     <-- (script para simular datos)
+    ├── modelo_entrenamiento.py <-- (entrena red neuronal)
+    ├── modelo_entrenado.h5    <-- (se genera en el paso 4)
+    ├── scaler.pkl             <-- (se genera en el paso 4)
+    ├── alarma.mp3             <-- (tu archivo de sonido de alarma)
+    └── main_deteccion.py      <-- (detección en tiempo real)
 
-Acciones:
-- Se abrirá la cámara.
-- En cada frame, presiona una de las siguientes teclas:
-    - D → si la persona está DESPIERTA (label = 0)
-    - S → si está DURMIENDO (label = 1)
-    - E → si parece EBRIA (label = 2)
-- ESC → salir y guardar el archivo
+3️⃣ Generar el Dataset Simulado
+-------------------------------
+Ejecuta este archivo para crear el archivo `datos/dataset.csv` con datos simulados:
 
-Resultado:
-- Se generará el archivo `datos/dataset.csv` con las características y etiquetas.
+    python generar_dataset.py
 
+Este archivo genera datos sintéticos para 3 clases:
+- Despierto
+- Dormido
+- Ebrio
 
-2. ENTRENAR LA RED NEURONAL
----------------------------
-Ejecutar el script:
+4️⃣ Entrenar el Modelo
+----------------------
+Entrena la red neuronal con el dataset generado:
 
     python modelo_entrenamiento.py
 
-Este script:
-- Carga el `dataset.csv`
-- Entrena una red neuronal para clasificar el estado
-- Guarda:
-    - `modelo_entrenado.h5` → el modelo entrenado
-    - `scaler.pkl` → el escalador para normalizar los datos
+Este paso generará dos archivos:
+- `modelo_entrenado.h5` (modelo entrenado)
+- `scaler.pkl` (escalador de datos)
 
-
-3. DETECCIÓN EN TIEMPO REAL
----------------------------
-Ejecutar el script principal:
+5️⃣ Ejecutar la Detección en Tiempo Real
+----------------------------------------
+Inicia la detección en vivo con la webcam:
 
     python main_deteccion.py
 
-Este script:
-- Usa la cámara para detectar la cara
-- Extrae características (EAR y movimiento)
-- Usa el modelo para predecir el estado:
-    - Despierto
-    - Durmiendo
-    - Posiblemente ebrio
-- Reproduce una alarma si detecta sueño
+Controles:
+- `ESC`: Salir
+- `Espacio`: Apagar alarma manualmente (si está sonando)
 
-Controles en tiempo real:
-- ESPACIO → Apagar la alarma manualmente
-- ESC → Salir
+⚠️ Asegúrate de tener el archivo `alarma.mp3` en la misma carpeta que `main_deteccion.py`.
 
-
-ESTRUCTURA DE CARPETAS RECOMENDADA:
------------------------------------
-proyecto_deteccion/
-│
-├── recolectar_datos.py         # Script para crear el CSV
-├── modelo_entrenamiento.py     # Entrena el modelo
-├── main_deteccion.py           # Detección en tiempo real
-├── alarma.mp3                  # Sonido de la alarma
-├── modelo_entrenado.h5         # Modelo ya entrenado (se genera)
-├── scaler.pkl                  # Escalador (se genera)
-├── instrucciones.txt           # Este archivo
-├── requirements.txt            # Lista de paquetes
-└── datos/
-    └── dataset.csv             # CSV generado
-
------------------------------------
-¡Listo! Ahora puedes usar el sistema completo.
+✅ ¡Listo! El sistema está operativo.
