@@ -1,0 +1,94 @@
+=========================
+SISTEMA DE DETECCIÓN DE SUEÑO / EBRIEDAD
+=========================
+
+REQUISITOS:
+-----------
+Python 3.7+
+Instalar dependencias:
+
+pip install -r requirements.txt
+
+Archivo 'requirements.txt' recomendado:
+---------------------------------------
+opencv-python
+mediapipe
+pygame
+numpy
+tensorflow
+scikit-learn
+joblib
+pandas
+
+PASO A PASO DE USO:
+-------------------
+
+1. CAPTURAR DATOS (crear CSV con datos simulados)
+-------------------------------------------------
+Ejecutar el script:
+
+    python recolectar_datos.py
+
+Acciones:
+- Se abrirá la cámara.
+- En cada frame, presiona una de las siguientes teclas:
+    - D → si la persona está DESPIERTA (label = 0)
+    - S → si está DURMIENDO (label = 1)
+    - E → si parece EBRIA (label = 2)
+- ESC → salir y guardar el archivo
+
+Resultado:
+- Se generará el archivo `datos/dataset.csv` con las características y etiquetas.
+
+
+2. ENTRENAR LA RED NEURONAL
+---------------------------
+Ejecutar el script:
+
+    python modelo_entrenamiento.py
+
+Este script:
+- Carga el `dataset.csv`
+- Entrena una red neuronal para clasificar el estado
+- Guarda:
+    - `modelo_entrenado.h5` → el modelo entrenado
+    - `scaler.pkl` → el escalador para normalizar los datos
+
+
+3. DETECCIÓN EN TIEMPO REAL
+---------------------------
+Ejecutar el script principal:
+
+    python main_deteccion.py
+
+Este script:
+- Usa la cámara para detectar la cara
+- Extrae características (EAR y movimiento)
+- Usa el modelo para predecir el estado:
+    - Despierto
+    - Durmiendo
+    - Posiblemente ebrio
+- Reproduce una alarma si detecta sueño
+
+Controles en tiempo real:
+- ESPACIO → Apagar la alarma manualmente
+- ESC → Salir
+
+
+ESTRUCTURA DE CARPETAS RECOMENDADA:
+-----------------------------------
+proyecto_deteccion/
+│
+├── recolectar_datos.py         # Script para crear el CSV
+├── modelo_entrenamiento.py     # Entrena el modelo
+├── main_deteccion.py           # Detección en tiempo real
+├── alarma.mp3                  # Sonido de la alarma
+├── modelo_entrenado.h5         # Modelo ya entrenado (se genera)
+├── scaler.pkl                  # Escalador (se genera)
+├── instrucciones.txt           # Este archivo
+├── requirements.txt            # Lista de paquetes
+└── datos/
+    └── dataset.csv             # CSV generado
+
+-----------------------------------
+¡Listo! Ahora puedes usar el sistema completo.
