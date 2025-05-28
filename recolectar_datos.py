@@ -25,7 +25,7 @@ ultima_posicion_cara = None
 
 print("Presiona D (despierto), S (dormido), E (ebrio), ESC para salir")
 
-left_ear = right_ear = avg_ear = movimiento = 0  # Variables por defecto para cuando no haya rostro
+left_ear = right_ear = avg_ear = movimiento = 0
 
 while True:
     ret, frame = cap.read()
@@ -38,7 +38,6 @@ while True:
 
     if result.multi_face_landmarks:
         for face_landmarks in result.multi_face_landmarks:
-            # Dibujar rostro
             mp_drawing.draw_landmarks(
                 image=frame,
                 landmark_list=face_landmarks,
@@ -74,7 +73,6 @@ while True:
         cv2.destroyAllWindows()
         break
 
-    # Guardar si hay etiqueta y landmarks detectados
     if label is not None and result.multi_face_landmarks:
         csv_writer.writerow([left_ear, right_ear, avg_ear, movimiento, label])
         print(f"Guardado: EAR={avg_ear:.2f}, Movimiento={movimiento:.2f}, Etiqueta={label}")
