@@ -1,32 +1,29 @@
 import csv
 import random
+import numpy as np
 
 ruta_csv = 'datos/dataset.csv'
 num_por_clase = 500
+
+def ruido(valor, sigma=0.02):
+    return max(0, min(1, np.random.normal(valor, sigma)))  # aseguramos valores entre 0 y 1
 
 with open(ruta_csv, mode='w', newline='') as archivo:
     writer = csv.writer(archivo)
     writer.writerow(['left_ear', 'right_ear', 'avg_ear', 'movimiento', 'label'])
 
     for _ in range(num_por_clase):
-        le = random.uniform(0.26, 0.32)
-        re = random.uniform(0.26, 0.32)
+        le = ruido(random.uniform(0.10, 0.20), 0.03)
+        re = ruido(random.uniform(0.10, 0.20), 0.03)
         avg = (le + re) / 2
-        movimiento = random.uniform(0.5, 2.0)
+        movimiento = max(0, random.gauss(1.5, 0.7))  # movimiento moderado con ruido
         writer.writerow([le, re, avg, movimiento, 0])
 
     for _ in range(num_por_clase):
-        le = random.uniform(0.10, 0.17)
-        re = random.uniform(0.10, 0.17)
+        le = ruido(random.uniform(0.08, 0.15), 0.02)
+        re = ruido(random.uniform(0.08, 0.15), 0.02)
         avg = (le + re) / 2
-        movimiento = random.uniform(0.1, 1.0)
+        movimiento = max(0, random.gauss(0.1, 0.05))  # movimiento muy bajo
         writer.writerow([le, re, avg, movimiento, 1])
 
-    for _ in range(num_por_clase):
-        le = random.uniform(0.18, 0.23)
-        re = random.uniform(0.18, 0.23)
-        avg = (le + re) / 2
-        movimiento = random.uniform(10.0, 25.0)
-        writer.writerow([le, re, avg, movimiento, 2])
-
-print(f"Dataset simulado guardado en {ruta_csv}")
+print(f"Dataset simulado menos perfecto guardado en {ruta_csv}")
