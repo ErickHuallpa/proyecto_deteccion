@@ -18,6 +18,15 @@ Este proyecto utiliza OpenCV y MediaPipe para detectar el estado de una persona 
 pip install opencv-python mediapipe pygame numpy pandas scikit-learn tensorflow joblib
 ```
 
+## Clonar repositorio YOLOv5 (si usas detección con YOLO)
+Este paso es necesario si vas a utilizar funciones como DetectMultiBackend:
+```bash
+git clone https://github.com/ultralytics/yolov5.git
+cd yolov5
+pip install -r requirements.txt
+```
+
+
 ## Estructura del proyecto
 
 proyecto_deteccion/
