@@ -191,7 +191,7 @@ while True:
         cv2.rectangle(frame2, (x1, y1), (x2, y2), (0, 255, 255), 2)
         cv2.putText(frame2, f"{cls_name}: {dist:.2f}m", (x1, y1-10), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 255), 2)
 
-        if cls_name in ['person', 'car'] and dist <= 5.0:
+        if cls_name in ['person', 'car'] and dist <= 3.0:
             alerta_mostrada = True
             cv2.putText(frame2, f"{cls_name.upper()} CERCA!!!", (w//4, 50), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (0, 0, 255), 3)
             filename = f"capturas/alerta_{cls_name}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.jpg"
