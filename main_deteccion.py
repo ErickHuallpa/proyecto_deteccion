@@ -12,7 +12,6 @@ import torch
 import sys
 from datetime import datetime
 
-# Rutas y configuraciones
 sys.path.append('./yolov5')
 from yolov5.models.common import DetectMultiBackend
 from yolov5.utils.torch_utils import select_device
@@ -23,7 +22,6 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 logging.getLogger('tensorflow').setLevel(logging.FATAL)
 tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
 
-# Inicializar audio
 try:
     pygame.mixer.init()
     audio_disponible = True
@@ -31,7 +29,6 @@ except pygame.error as e:
     print(f"Advertencia: No se pudo inicializar audio ({e})")
     audio_disponible = False
 
-# Cargar modelos
 modelo = load_model('modelo_entrenado.h5')
 scaler = joblib.load('scaler.pkl')
 device = select_device('')
@@ -40,16 +37,14 @@ yolo_model.eval()
 STRIDE = yolo_model.stride
 CLASSES = yolo_model.names
 
-# MediaPipe FaceMesh
 mp_face_mesh = mp.solutions.face_mesh
 face_mesh = mp_face_mesh.FaceMesh(refine_landmarks=True)
 
 LEFT_EYE = [33, 160, 158, 133, 153, 144]
 RIGHT_EYE = [362, 385, 387, 263, 373, 380]
 NOSE_TIP = 1
-MOUTH = [13, 14]  # Labios superior e inferior
+MOUTH = [13, 14]
 
-# Variables de estado
 alarma_sonando = False
 alarma_desactivada = False
 ultima_posicion_cara = None
@@ -62,7 +57,6 @@ tiempo_alarma_inicio = None
 mostrar_reduciendo_velocidad = False
 tiempo_inicio_mensaje = None
 
-# Funciones auxiliares
 def reproducir_alarma():
     global alarma_sonando, alarma_desactivada, tiempo_alarma_inicio
     if not alarma_sonando and not alarma_desactivada and audio_disponible:
@@ -112,7 +106,6 @@ def detectar_objetos(frame, focal=700, ancho_real_objeto=0.5):
                 detecciones.append((cls_name, (x1, y1, x2, y2), distancia))
     return detecciones
 
-# Capturas
 cap1 = cv2.VideoCapture("ejemplo.mp4")
 cap2 = cv2.VideoCapture("video.mp4")
 os.makedirs("capturas", exist_ok=True)
@@ -136,7 +129,6 @@ while True:
 
     if result.multi_face_landmarks:
         for face_landmarks in result.multi_face_landmarks:
-            # Solo dibujar puntos clave
             for idx in LEFT_EYE + RIGHT_EYE + [NOSE_TIP] + MOUTH:
                 x = int(face_landmarks.landmark[idx].x * w)
                 y = int(face_landmarks.landmark[idx].y * h)

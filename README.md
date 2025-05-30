@@ -33,19 +33,21 @@ proyecto_deteccion/
 
 ├── datos/
 
-│ └── dataset.csv # Dataset simulado (generado automáticamente)
+│   └── dataset.csv                 # Dataset simulado generado automáticamente
 
-├── generar_dataset.py # Script para generar dataset simulado
+├── generar_dataset.py              # Script para generar el dataset simulado
 
-├── modelo_entrenamiento.py # Entrena la red neuronal con el dataset
+├── modelo_entrenamiento.py         # Script para entrenar el modelo de detección
 
-├── modelo_entrenado.h5 # Modelo entrenado (se genera)
+├── modelo_entrenado.h5             # Modelo entrenado generado
 
-├── scaler.pkl # Escalador de datos (se genera)
+├── scaler.pkl                      # Escalador de datos generado
 
-├── alarma.mp3 # Archivo de audio para la alarma
+├── alarma.mp3                      # Archivo de audio para alarma sonora
 
-└── main_deteccion.py # Script principal de detección en vivo
+├── main_deteccion.py               # Script principal para detección en tiempo real
+
+└── yolov5/                         # Carpeta con YOLOv5 para detección de objetos
 
 ## Uso
 1. Generar el dataset simulado

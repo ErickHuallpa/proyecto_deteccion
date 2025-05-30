@@ -1,0 +1,71 @@
+# Sistema de Detección de Conductor Durmiendo usando Visión por Computadora
+
+Este proyecto implementa un sistema para detectar si un conductor está dormido mediante análisis de parpadeo (EAR) y movimiento facial, utilizando OpenCV, MediaPipe y una red neuronal entrenada con datos simulados. Además, cuenta con detección de objetos con YOLOv5 para alertar proximidad de personas o vehículos y activa una alarma sonora cuando detecta sueño.
+
+## Requisitos
+
+- Python 3.8 o superior
+- Webcam o videos de prueba (ejemplo.mp4 y video.mp4)
+- Archivo de audio `alarma.mp3` en la carpeta del proyecto
+
+## Instalación de dependencias
+
+pip install opencv-python mediapipe pygame numpy pandas scikit-learn tensorflow joblib torch torchvision
+
+## Clonar repositorio YOLOv5 (para detección de objetos)
+
+git clone https://github.com/ultralytics/yolov5.git
+cd yolov5
+pip install -r requirements.txt
+
+## Estructura del proyecto
+
+proyecto_deteccion/
+├── datos/
+│   └── dataset.csv                 # Dataset simulado generado automáticamente
+├── generar_dataset.py              # Script para generar el dataset simulado
+├── modelo_entrenamiento.py         # Script para entrenar el modelo de detección
+├── modelo_entrenado.h5             # Modelo entrenado generado
+├── scaler.pkl                      # Escalador de datos generado
+├── alarma.mp3                      # Archivo de audio para alarma sonora
+├── main_deteccion.py               # Script principal para detección en tiempo real
+└── yolov5/                         # Carpeta con YOLOv5 para detección de objetos
+
+## Uso
+1. Generar el dataset simulado
+Ejecuta el siguiente comando para generar datos de entrenamiento simulados en datos/dataset.csv:
+
+    python generar_dataset.py
+
+2. Entrenar el modelo de detección
+Entrena la red neuronal con el dataset generado para clasificar estados (despierto/durmiendo):
+
+    python modelo_entrenamiento.py
+
+Esto generará los archivos modelo_entrenado.h5 y scaler.pkl.
+
+3. Ejecutar la detección en tiempo real
+Ejecuta el script principal que abre webcam/video para detectar el estado del conductor y objetos cercanos:
+
+    python main_deteccion.py
+
+
+## Controles en la aplicación
+
+ESC: Salir del programa
+
+ESPACIO: Apagar la alarma manualmente (silenciar)
+
+## Notas importantes
+- Asegúrate que el archivo alarma.mp3 esté presente en la carpeta raíz del proyecto para que la alarma pueda reproducirse.
+
+- La red neuronal utiliza como entrada cuatro características: EAR izquierdo, EAR derecho, EAR promedio y movimiento facial.
+
+- La detección de objetos con YOLOv5 alerta si hay personas o vehículos a menos de 5 metros.
+
+- El sistema activa una alarma sonora si detecta que el conductor está durmiendo según la red neuronal y un umbral de frames consecutivos.
+
+- Para mejorar precisión, los parámetros como EAR_UMBRAL y FRAMES_UMBRAL pueden ajustarse en main_deteccion.py.
+
+## Autor
+Erick Huallpa Vargas
